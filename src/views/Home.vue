@@ -231,10 +231,10 @@ export default {
           console.log(err)
         })*/
         this.dashBoardData = {
-          'EARNINGS_MONTHLY' : 1,
-          'EARNINGS_ANNUAL' : 2,
-          'TASKS' : 5,
-          'PENDING_REQUEST' : 5,
+          'EARNINGS_MONTHLY' : "40,000",
+          'EARNINGS_ANNUAL' : "215,000",
+          'TASKS' : 50,
+          'PENDING_REQUEST' : 18,
           
         };
       },

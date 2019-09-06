@@ -1,5 +1,60 @@
 <template>
-  <div class="login">
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Login!</h1>
+                  </div>
+                  <div v-if="errors.length" class="alert alert-danger">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                      <li class="alert alert-danger" v-for="error in errors" :key="error">{{ error }}</li>
+                    </ul>
+                  </div>
+                  <form class="user">
+                    <div class="form-group">
+                      <input style="width:100%" v-model="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <div class="form-group">
+                      <input style="width:100%" v-model="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                    </div>
+                    
+                    <a  @click="login" href="#" class="btn btn-primary btn-user btn-block">
+                      Login
+                    </a>
+                    <hr>
+                    
+                  </form>
+                  
+                  
+                  <div class="text-center">
+                    <p><router-link to="/sign-up">Create an Account!</router-link></p>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- <div class="login">
     <h3>Sign In</h3>
     
     <p v-if="errors.length">
@@ -12,7 +67,7 @@
     <input type="password" v-model="password" placeholder="Password"><br>
     <button @click="login">Login</button>
     <p>You don't have an account ? You can <router-link to="/sign-up">create one</router-link></p>
-  </div>
+  </div> -->
 </template>
 
 <script>

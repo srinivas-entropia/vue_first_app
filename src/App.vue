@@ -2,12 +2,13 @@
 <template>
 
 
-
+<div >
   <div id="app">
    <navHeader ></navHeader>
     
     <router-view />
   </div>
+</div>
 </template>
 <script>
 import Header from './components/Header.vue'
