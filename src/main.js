@@ -16,7 +16,11 @@ const config = {
   messagingSenderId: "1005033467904",
   appId: "1:1005033467904:web:78ab9e3d3160d252d8e8e5"
 };
-// Initialize Firebase
+import jQuery from  'jquery';
+window.$=window.jQuery = jQuery;
+import 'popper.js';
+import 'bootstrap'; 
+import './assets/app.scss';
 firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {

@@ -3,7 +3,7 @@
 
 
 
-  <div id="app1">
+  <div id="app">
    <navHeader ></navHeader>
     
     <router-view />
