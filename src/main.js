@@ -20,7 +20,9 @@ import jQuery from  'jquery';
 window.$=window.jQuery = jQuery;
 import 'popper.js';
 import 'bootstrap'; 
+//import './assets/sb-admin-2.min'
 import './assets/app.scss';
+
 firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
