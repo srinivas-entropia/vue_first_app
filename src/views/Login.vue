@@ -74,7 +74,8 @@
 
 //console.log(globalReadOnlyProperty);
   import firebase from 'firebase';
-  
+  import axios from 'axios';
+  import router from '../router'
   export default {
     name: 'login',
     data() {
@@ -103,6 +104,7 @@
               },
               (err) => {
                 alert('Oops. ' + err.message)
+                this.$router.replace('login');
               }
             );
           }
@@ -114,13 +116,42 @@
             this.errors.push('password required.');
           }
         }else if(appServer=="Laravel"){
-          if (!this.email) {
-            this.errors.push('email required.');
-          }
-          if (!this.password) {
-            this.errors.push('password required.');
-          }
+            var bodyFormData = new FormData();
+            bodyFormData.set('email', this.email);
+            bodyFormData.set('password', this.password);
+            if (!this.email) {
+              this.errors.push('email required.');
+            }
+            if (!this.password) {
+              this.errors.push('password required.');
+            }
+            axios({
+            method: 'post',
+            url: 'http://localhost/laravel-apps/laravel-api/public/api/login',
+            data: bodyFormData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
+            })
+            .then(function (response) {
+                //handle success
+                var responseData= response.data.data;
+                if(responseData.status == 'success'){
+                  alert("Welcome "+responseData.result.email+", You are successfully logged in.");
+                  localStorage.setItem('userDetails', JSON.stringify(responseData.result));
+                  router.replace('home');
+                }else{
+                  alert("Invalid Credentials");
+                  router.replace('login');
+                }
+                
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+                router.replace('login');
+            });
+            
         }
+
 
         
       }

@@ -52,7 +52,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   let appServer = process.env.VUE_APP_BACKEND_SERVER;
   console.log("appServer "+appServer);
-  var currentUser = null;
+  var currentUser = "";
   if(appServer=="Firebase"){
     console.log("checking authentication for firebase user");
     currentUser = firebase.auth().currentUser;

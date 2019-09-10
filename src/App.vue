@@ -4,8 +4,9 @@
 
 <div >
   <div id="app">
+    
     <div id="wrapper">
-   <navHeader ></navHeader>
+   <navHeader  ></navHeader>
    
     
     <router-view />
@@ -16,12 +17,17 @@
 </div>
 </template>
 <script>
+
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 export default {
   components:{
     navHeader: Header,
     navFooter: Footer,
+  },data(){
+     userDetails : JSON.parse(localStorage.getItem('userDetails'));
+
+    return 
   }
 }
 </script>

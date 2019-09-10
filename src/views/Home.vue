@@ -213,6 +213,8 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800">${{dashBoardData.EARNINGS_MONTHLY}}</div>
                     </div>
                     <div class="col-auto">
+                      
+                      <i class="fas fa-calendar-week"></i>
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
                     </div>
                   </div>
@@ -307,7 +309,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
+                    <apexchart width="600" type="line" :options="options" :series="series"></apexchart>
                   </div>
                 </div>
               </div>
@@ -335,7 +337,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="chart-pie pt-4 pb-2"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <apexchart width="380" type="donut" :options="donutOptions" :series="donutSeries"></apexchart>
+                    <apexchart width="350" type="donut" :options="donutOptions" :series="donutSeries"></apexchart>
                   </div>
                   <div class="mt-4 text-center small">
                     <span class="mr-2">
@@ -491,10 +493,36 @@ import firebase from 'firebase';
 
 
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import axios from 'axios'
-import VueApexCharts from 'vue-apexcharts'
+import HelloWorld from '@/components/HelloWorld.vue';
+import axios from 'axios';
+import VueApexCharts from 'vue-apexcharts';
+import router from '../router'
+//axios.defaults.headers.common['Authorization'] = 'Bearer someGenericValueDefault';
+// axios.defaults.baseURL = 'https://api.example.com';
+// Set config defaults when creating the instance
+// const axioInstance = axios.create({
+//   baseURL: 'http://localhost/laravel-apps/laravel-api/public/api/',
+//   headers :{
+//     //'Access-Control-Allow-Origin': '*',
+//     'crossdomain' : true,
+//     'Authorization' : "Bearer someGenericValueDefault"
+    
+//   }
+// });
 
+//axioInstance.interceptors.request.use((config) => {
+//   //debugger;
+//     //config.headers["X-Requested-With"]="XMLHttpRequest";
+//     //config.headers['Authorization'] = "someGenericValueDefault";
+//     //config.headers.genericKey = "someGenericValue";
+//     //config.headers['Content-Type'] = "application/json";
+//     //config.headers['Sec-Fetch-Mode']='cors';
+//     config.headers.Authorization = "Bearer someGenericValueDefault";
+//     config.headers.crossdomain = true;
+//     return config;
+// }, (error) => {
+//     return Promise.reject(error);
+// });
 export default {
   name: 'home',
   components: {
@@ -507,74 +535,127 @@ export default {
         msg: '',
         dashBoardData:'',
         donutOptions: {},
-        donutSeries: [44, 55, 41, 17, 15],
+        donutSeries: "",
         options: {
-        chart: {
-          id: 'vuechart-example'
+          chart: {
+            id: 'vuechart-example'
+          },
+          xaxis: {
+            categories: 123
+          }
         },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
-      },
       series: [{
         name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        data: "",
       }]
         
       }
     },
     created() {
-      this.fetchData()
+      this.dashboardData()
      
     },
 
     watch: {
-      '$route': 'fetchData'
+      '$route': 'dashboardData'
     },
     
   methods: {
     logout: function() {
+      let appServer = process.env.VUE_APP_BACKEND_SERVER;
+      if(appServer=="Firebase"){
       //console.log(this.msg);
-      localStorage.setItem('userDetails', JSON.stringify(null));
-      //console.log(JSON.parse(localStorage.getItem('userDetails')));
-     // return false;
-      firebase.auth().signOut().then(() => {
-       
-        this.$router.replace('login')
-      })
-    },
-      fetchData() { 
-        axios.get('http://laravelapp-enp.herokuapp.com/public/api/dashboard-data',{
-          mode: 'no-cors',
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-          credentials: 'same-origin',
+        localStorage.setItem('userDetails', JSON.stringify(null));
+        //console.log(JSON.parse(localStorage.getItem('userDetails')));
+      // return false;
+        firebase.auth().signOut().then(() => {
+        
+          this.$router.replace('login')
+        })
+      }else if(appServer=="Laravel"){
           
-          })
-        .then((resp) => {
-          console.log('dashboard data');
-          console.log(resp);
+            
+            axios(
+              {
+                 'url': 'http://localhost/laravel-apps/laravel-api/public/api/logout',
+                 'method' : 'post',
+                 'headers' : {
+                   'Authorization' : this.userDetails.token,
+                   'Content-Type' : "application/json"
+                 }
+            
+            })
+            .then(function (response) {
+                //handle success
+                var responseData= response.data.data;
+                if(responseData.status == 'success'){
+                  alert(" You are successfully logged out.");
+                  localStorage.setItem('userDetails', JSON.stringify(null));
+                  router.replace('login');
+                }else{
+                  alert("Invalid Credentials");
+                  router.replace('home');
+                }
+                
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+            });
+      }
+    },
+      dashboardData() { 
+        console.log(this.userDetails.token);
+
+        axios(
+              {
+                 'url': 'http://localhost/laravel-apps/laravel-api/public/api/dashboard-data',
+                 'method' : 'get',
+                 'headers' : {
+                   'Authorization' : this.userDetails.token,
+                   'Content-Type' : "application/json"
+                 }
+            
+       })
+        
          
+        .then((resp) => {
+          var respData = resp.data.data;
+          if(respData.status == 'success'){
+            console.log('dashboard data');
+            console.log(resp.data.data);
+            this.dashBoardData = {
+              'EARNINGS_MONTHLY' : respData.result.stats.EARNINGS_MONTHLY,
+              'EARNINGS_ANNUAL' : respData.result.stats.EARNINGS_ANNUAL,
+              'TASKS' : respData.result.stats.TASKS,
+              'PENDING_REQUEST' : respData.result.stats.PENDING_REQUEST,
+              
+              
+            };
+            //console.log(this.options);
+            //console.log(this.series);
+            this.donutOptions = respData.result.donut_stats.options;
+            this.donutSeries = respData.result.donut_stats.series;
+            this.options.xaxis.categories = respData.result.chart_stats.options;
+            this.series.data = respData.result.chart_stats.series;
+          }else{
+            alert("Un Authorized");
+            router.replace('login');
+          }
+            
+              
+
         })
         .catch((err) => {
           console.log(err)
         })
-        this.dashBoardData = {
-          'EARNINGS_MONTHLY' : "40,000",
-          'EARNINGS_ANNUAL' : "215,000",
-          'TASKS' : 50,
-          'PENDING_REQUEST' : 18,
-          
-        };
+        
       },
       
        
     },
   mounted() {
-    //this.fetchData()
+    
     console.log('App mounted!');
     if (localStorage.getItem('userDetails')) { 
       this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -587,6 +668,7 @@ export default {
     }else{
        this.msg="Hello Guest Welcome to Vue SPA APP";
     }
+    this.dashboardData();
     //var userdetails =  JSON.parse(localStorage.getItem('userDetails'));
    
     //console.log(this.userDetails.email);
