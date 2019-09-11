@@ -127,7 +127,7 @@
             }
             axios({
             method: 'post',
-            url: 'http://localhost/laravel-apps/laravel-api/public/api/login',
+            url: process.env.VUE_APP_ROOT_API+'login',
             data: bodyFormData,
             config: { headers: {'Content-Type': 'multipart/form-data' }}
             })

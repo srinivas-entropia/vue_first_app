@@ -16,7 +16,7 @@
     <hr class="sidebar-divider my-0" />
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li  class="nav-item active">
       <router-link class="nav-link" to="/">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span>
@@ -25,6 +25,7 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>-->
     </li>
+    
   </ul>
 
   <!--<div id="nav">
@@ -41,8 +42,21 @@ export default {
 
   data() {
     return {
-      userStatus: JSON.parse(localStorage.getItem("userDetails"))
+      userStatus: JSON.parse(localStorage.getItem("userDetails")),
+      userDetails : null
     };
+  },mounted() {
+    console.log("header mounted!");
+    if (localStorage.getItem("userDetails")) {
+      this.userDetails = JSON.parse(localStorage.getItem("userDetails"));
+      
+    } else {
+      this.userDetails =null;
+    }
+    
+    //var userdetails =  JSON.parse(localStorage.getItem('userDetails'));
+
+    //console.log(this.userDetails.email);
   }
 
   // if(JSON.parse(localStorage.getItem('userDetails')))

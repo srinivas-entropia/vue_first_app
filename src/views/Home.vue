@@ -744,10 +744,7 @@ export default {
           name: "series-1",
           data: []
         },
-        {
-          name: "series-2",
-          data: []
-        }
+        
       ]
     };
   },
@@ -775,7 +772,7 @@ export default {
           });
       } else if (appServer == "Laravel") {
         axios({
-          url: "http://localhost/laravel-apps/laravel-api/public/api/logout",
+          url: process.env.VUE_APP_ROOT_API+"logout",
           method: "post",
           headers: {
             Authorization: this.userDetails.token,
@@ -805,7 +802,7 @@ export default {
 
       axios({
         url:
-          "http://localhost/laravel-apps/laravel-api/public/api/dashboard-data",
+          process.env.VUE_APP_ROOT_API+"dashboard-data",
         method: "get",
         headers: {
           Authorization: this.userDetails.token,
@@ -829,7 +826,7 @@ export default {
             this.donutSeries = respData.result.donut_stats.series;
             this.options.xaxis.categories = respData.result.chart_stats.options;
             this.series[0].data = respData.result.chart_stats.series[0];
-            this.series[1].data = respData.result.chart_stats.series[1];
+            //this.series[1].data = respData.result.chart_stats.series[1];
           } else {
             alert("Un Authorized");
             router.replace("login");
