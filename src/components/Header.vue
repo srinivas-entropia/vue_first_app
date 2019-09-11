@@ -40,7 +40,7 @@ export default {
       userDetails : null
     };
   },mounted() {
-    console.log("header mounted!");
+    //console.log("header mounted!");
     if (localStorage.getItem("userDetails")) {
       this.userDetails = JSON.parse(localStorage.getItem("userDetails"));
       
