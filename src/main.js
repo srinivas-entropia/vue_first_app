@@ -50,7 +50,7 @@ if (appServer == "Firebase") {
       /* eslint-disable no-new */
       app = new Vue({
         router,
-       // mode: 'History',
+        // mode: 'History',
         render: h => h(App)
       }).$mount('#app');
     }
@@ -60,13 +60,13 @@ if (appServer == "Firebase") {
   currentUser = JSON.parse(localStorage.getItem('userDetails'));
   //if(currentUser==''){
   //if (!app) {
-    /* eslint-disable no-new */
-    app = new Vue({
-      router,
-     // mode: 'History',
-      render: h => h(App)
-    }).$mount('#app');
- // }
+  /* eslint-disable no-new */
+  app = new Vue({
+    router,
+    // mode: 'History',
+    render: h => h(App)
+  }).$mount('#app');
+  // }
   //}
 }
 

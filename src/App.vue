@@ -1,35 +1,30 @@
 
 <template>
+  <div>
+    <div id="app">
+      <div id="wrapper">
+        <navHeader></navHeader>
 
-
-<div >
-  <div id="app">
-    
-    <div id="wrapper">
-   <navHeader  ></navHeader>
-   
-    
-    <router-view />
-    
+        <router-view />
+      </div>
+      <navFooter></navFooter>
     </div>
-    <navFooter ></navFooter>
   </div>
-</div>
 </template>
 <script>
-
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 export default {
-  components:{
+  components: {
     navHeader: Header,
-    navFooter: Footer,
-  },data(){
-     userDetails : JSON.parse(localStorage.getItem('userDetails'));
+    navFooter: Footer
+  },
+  data() {
+    userDetails: JSON.parse(localStorage.getItem("userDetails"));
 
-    return 
+    return;
   }
-}
+};
 </script>
 <style>
 #app {
