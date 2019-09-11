@@ -688,7 +688,7 @@ console.log(process.env.VUE_APP_ROOT_API);
 import firebase from "firebase";
 
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+//import HelloWorld from "@/components/HelloWorld.vue";
 import axios from "axios";
 import VueApexCharts from "vue-apexcharts";
 import router from "../router";
@@ -721,7 +721,7 @@ import router from "../router";
 export default {
   name: "home",
   components: {
-    HelloWorld,
+    // HelloWorld,
     apexchart: VueApexCharts
   },
 
@@ -742,11 +742,11 @@ export default {
       series: [
         {
           name: "series-1",
-          data: ""
+          data: []
         },
         {
           name: "series-2",
-          data: ""
+          data: []
         }
       ]
     };
