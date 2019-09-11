@@ -727,10 +727,11 @@ export default {
 
   data() {
     return {
+      userDetails: "",
       msg: "",
       dashBoardData: "",
       donutOptions: {},
-      donutSeries: "",
+      donutSeries: [],
       options: {
         chart: {
           id: "vuechart-example"
@@ -743,17 +744,16 @@ export default {
         {
           name: "series-1",
           data: []
-        },
-        
+        }
       ]
     };
   },
   created() {
-    this.dashboardData();
+    //this.dashboardData();
   },
 
   watch: {
-    $route: "dashboardData"
+    //$route: "dashboardData"
   },
 
   methods: {
@@ -772,7 +772,7 @@ export default {
           });
       } else if (appServer == "Laravel") {
         axios({
-          url: process.env.VUE_APP_ROOT_API+"logout",
+          url: process.env.VUE_APP_ROOT_API + "logout",
           method: "post",
           headers: {
             Authorization: this.userDetails.token,
@@ -798,11 +798,10 @@ export default {
       }
     },
     dashboardData() {
-      console.log(this.userDetails.token);
+      //console.log(this.userDetails.token);
 
       axios({
-        url:
-          process.env.VUE_APP_ROOT_API+"dashboard-data",
+        url: process.env.VUE_APP_ROOT_API + "dashboard-data",
         method: "get",
         headers: {
           Authorization: this.userDetails.token,

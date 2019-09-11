@@ -92,7 +92,7 @@
        // return false;
        //checking backend server and authenticating 
        //console.log(app.config.appServer);
-       let appServer = process.env.VUE_APP_BACKEND_SERVER;
+        let appServer = process.env.VUE_APP_BACKEND_SERVER;
         if(appServer=="Firebase"){
           if (this.email && this.password) {
             firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(

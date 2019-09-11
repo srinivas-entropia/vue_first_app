@@ -22,10 +22,16 @@ import 'popper.js';
 import 'bootstrap';
 //import './assets/sb-admin-2.min'
 import './assets/app.scss';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import {
+  library
+} from '@fortawesome/fontawesome-svg-core'
+import {
+  faUserSecret
+} from '@fortawesome/free-solid-svg-icons'
 
-import { FontAwesomeBrandsIcon } from '@fortawesome/free-brands-svg-icons'
+import {
+  FontAwesomeBrandsIcon
+} from '@fortawesome/free-brands-svg-icons'
 //import { FontAwesomeRegularIcon } from' @fortawesome/free-regular-svg-icons'
 //import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faUserSecret)
@@ -57,7 +63,7 @@ if (appServer == "Firebase") {
   });
 } else if (appServer == "Laravel") {
   console.log("checking authentication for laravel user");
-  currentUser = JSON.parse(localStorage.getItem('userDetails'));
+  //currentUser = JSON.parse(localStorage.getItem('userDetails'));
   //if(currentUser==''){
   //if (!app) {
   /* eslint-disable no-new */
@@ -69,6 +75,3 @@ if (appServer == "Firebase") {
   // }
   //}
 }
-
-
-

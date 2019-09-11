@@ -60,6 +60,9 @@
  <script>
  
   import firebase from 'firebase';
+  import router from '../router';
+  import axios from 'axios';
+
   export default {
     name: 'Signup',
     data() {
@@ -70,16 +73,64 @@
     },
     methods: {
       signUp: function() {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          (user) => {
-            alert('Your account has been created!');
-            localStorage.setItem('userDetails', JSON.stringify(user.user));
-            this.$router.replace('home')
-          },
-          (err) => {
-            alert('Oops. ' + err.message)
+        let appServer = process.env.VUE_APP_BACKEND_SERVER;
+        if(appServer=="Firebase"){
+          if (this.email && this.password) {
+            firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+              (user) => {
+                alert('Your account has been created!');
+                localStorage.setItem('userDetails', JSON.stringify(user.user));
+                this.$router.replace('home')
+              },
+              (err) => {
+                alert('Oops. ' + err.message)
+              }
+            );
           }
-        );
+          //validating user here and pushing error message to error array for displyaing error messages in login form
+          if (!this.email) {
+            this.errors.push('email required.');
+          }
+          if (!this.password) {
+            this.errors.push('password required.');
+          }
+        }else if(appServer=="Laravel"){
+            var bodyFormData = new FormData();
+            bodyFormData.set('email', this.email);
+            bodyFormData.set('password', this.password);
+            if (!this.email) {
+              this.errors.push('email required.');
+            }
+            if (!this.password) {
+              this.errors.push('password required.');
+            }
+            axios({
+            method: 'post',
+            url: process.env.VUE_APP_ROOT_API+'signup',
+            data: bodyFormData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
+            })
+            .then(function (response) {
+                //handle success
+                var responseData= response.data.data;
+                if(responseData.status == 'success'){
+                  alert("Welcome "+responseData.result.email+", You are successfully logged in.");
+                  localStorage.setItem('userDetails', JSON.stringify(responseData.result));
+                  router.replace('home');
+                }else{
+                  alert("Invalid Credentials");
+                  router.replace('signup');
+                }
+                
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+                router.replace('login');
+            });
+            
+        }
+        
       }
     }
   }

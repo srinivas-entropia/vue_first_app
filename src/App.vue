@@ -20,9 +20,9 @@ export default {
     navFooter: Footer
   },
   data() {
-    userDetails: JSON.parse(localStorage.getItem("userDetails"));
-
-    return;
+    return{
+      userDetails: JSON.parse(localStorage.getItem("userDetails")),
+    }
   }
 };
 </script>
